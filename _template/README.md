@@ -51,6 +51,31 @@
 - [e.g. Frequent whipsaw losses from false breakouts]
 - [e.g. High transaction costs/slippage if traded on low timeframes]
 
+### Backtest Results (Snapshot)
+> **[Ticker], [interval] bars, default settings**. Data ends at the close on **[YYYY-MM-DD]**. The test window starts on **[YYYY-MM-DD]**, after indicator warm-up. Re-running `strategy.py` uses the latest data, so numbers will change over time.
+
+| Metric | Value |
+|--------|-------|
+| Period tested | [start] → [end] ([N] bars) |
+| Total trades | [N] |
+| Win rate | [x]% |
+| Strategy total return | [+x]% |
+| Buy & hold benchmark | [+x]% |
+| Max drawdown | [-x]% |
+| Time in market | [x]% |
+| $10,000 would have become | $[x] |
+
+**Trade log**
+
+| # | Entry date | Entry price | Exit date | Exit price | Return | Status |
+|---|------------|-------------|-----------|------------|--------|--------|
+| 1 | [date] | $[x] | [date] | $[x] | [+x]% | [Closed / Open] |
+
+**Takeaways**
+- [How it compared with buy-and-hold and why]
+- [Notable trades that illustrate the strategy's strengths or failure modes]
+- [Sample-size caveat]
+
 ---
 
 ## 6. How to Run
@@ -78,9 +103,14 @@ python strategy.py
 
 ### 4. Interpreting Output
 The script prints:
-- **Market Snapshot**: Latest bar date, close price, and indicator values.
-- **Actionable Signal**: Current state (`BUY`, `SELL`, or `HOLD/NEUTRAL`).
-- **Quick Backtest Summary (if enabled)**: Total strategy return vs. buy-and-hold benchmark, win rate, total trades, and maximum drawdown.
+- **Market Snapshot**: latest completed bar date, close price, and indicator values.
+- **Current State**: `LONG` or `FLAT`, the position the rules say you should currently hold.
+- **Actionable Signal**: `BUY` or `SELL` only on the bar where a trigger just fired, otherwise `HOLD`. Act on it at the next session's open.
+- **Last Signal**: date and type of the most recent trigger.
+- **Quick Backtest Summary (if enabled)**: strategy return vs. buy-and-hold, win rate, number of trades, maximum drawdown, and time in market.
+
+> [!NOTE]
+> If you run the script while the market is open, today's unfinished bar is ignored and a message says so. Signals only use completed days, so a signal can't appear and then disappear before the close.
 
 ---
 

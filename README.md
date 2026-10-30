@@ -37,7 +37,8 @@ The script will fetch the latest market data, calculate indicators, output the c
 
 | Folder | Strategy | Type / Category | Indicators | Asset Class |
 |--------|----------|-----------------|------------|-------------|
-| *Coming Soon* | *Strategies currently being authored* | — | — | — |
+| [`ma_crossover/`](ma_crossover/) | Moving Average Crossover (Golden / Death Cross) | Trend-Following | SMA 50 / SMA 200 | Indices, ETFs, stocks, crypto |
+| [`rsi_mean_reversion/`](rsi_mean_reversion/) | RSI Mean Reversion (Oversold Bounce) | Mean-Reversion | RSI 14 (Wilder), 30 / 70 | Indices, ETFs, large-caps |
 
 *To create or propose a new strategy, refer to the [`_template/`](_template/) directory.*
 
@@ -49,7 +50,7 @@ The script will fetch the latest market data, calculate indicators, output the c
 2. **Self-Contained Code**: Each `strategy.py` can be copied outside this repository and run standalone with zero custom internal imports.
 3. **Signal Only (Manual Execution)**: Scripts generate transparent trading signals. No broker API keys, automated order placement, or external execution hooks.
 4. **Uniform Standard**: Every strategy adheres to the exact same sections in its `README.md` and the exact same 7-part architecture in `strategy.py`.
-5. **No Lookahead Bias**: Historical backtests execute signals on the bar following signal generation (`t + 1`).
+5. **No Lookahead Bias**: Signals are evaluated on a bar's close, and backtests fill trades at the **next bar's open**, just as a manual trader would. Bars that are still forming (e.g. running the script while the market is open) are ignored, so signals never change after you see them.
 
 ---
 
